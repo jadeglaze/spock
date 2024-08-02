@@ -31,10 +31,12 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 
 ## TODO
 - [ ] Make it deploy (vercel)
-- [ ] Scaffold basic UI with mock data
+- [ ] Scaffold basic UI with mock data (v0)
 - [ ] setup db (sqlite? vercel postgres?)
 - [ ] attach db to ui
 - [ ] error management (w/ Sentry)
 - [ ] new convo button
 - [ ] send button
-
+- [ ] implement basic ChatGPT convo with Vercel AI
+- [ ] add tools
+- [ ] break up the UI into React components
