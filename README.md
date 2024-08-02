@@ -30,7 +30,8 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 
 
 ## TODO
-- [ ] Make it deploy (vercel)
+- [x] Make it deploy (vercel)
+- [ ] Use uploadthing.com for images if I need any
 - [ ] Scaffold basic UI with mock data (v0)
 - [ ] setup db (sqlite? vercel postgres?)
 - [ ] attach db to ui
