@@ -31,7 +31,7 @@ const Convo = React.forwardRef<HTMLDivElement, ConvoProps>(
         <div className="sticky bottom-0 bg-background py-2 px-4">
           <div className="relative">
             <Textarea
-              placeholder="Message ChatGPT..."
+              placeholder="Message to Jippity..."
               name="message"
               id="message"
               rows={2}

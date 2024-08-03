@@ -20,8 +20,6 @@ To read more about using these font, please visit the Next.js documentation:
 import { Button } from "~/components/ui/button"
 import Link from "next/link"
 import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar"
-import { Textarea } from "~/components/ui/textarea"
-import { Balloon } from "./ui/balloon"
 import { Convo } from "./ui/convo"
 
 export function Spock() {

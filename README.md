@@ -32,7 +32,7 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 ## TODO
 - [x] Make it deploy (vercel)
 - [ ] Use uploadthing.com for images if I need any
-- [ ] Scaffold basic UI with mock data (v0)
+- [x] Scaffold basic UI with mock data (v0)
 - [ ] figure out how to add unit tests
 - [ ] setup db (sqlite)
 - [ ] attach db to ui
@@ -45,5 +45,22 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 
 
 ## Stuff I did
+Learn a bunch about v0, Create T3 App (This is my first React app and first TypeScript app.)
+Learn about ReAct prompting (I basically knew the idea and CoT as well, just didn't know the name "ReAct")
+Explored lots of free public APIs to potentially use as tools.
+(Install VSCode)
+(Install pnpm)
+pnpm create t3-app@latest
+pnpm db:push
+git commit -m "initial commit"
+pnpm dev
+(brew install gh)
+(gh auth login)
+gh repo create
+Created Vercel project from GitHub repo
+Added DB environment var to Vercel project to it can deploy to prod (automatically on push to main)
+Use v0 to kick start a UI
 pnpm dlx shadcn-ui@latest init
 npx v0 add TxkI58twHZ9
+Put generated v0 component in top level of page.tsx
+Break up generated UI into nicer components: Balloon, Convo...
