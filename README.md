@@ -33,7 +33,8 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [x] Make it deploy (vercel)
 - [ ] Use uploadthing.com for images if I need any
 - [ ] Scaffold basic UI with mock data (v0)
-- [ ] setup db (sqlite? vercel postgres?)
+- [ ] figure out how to add unit tests
+- [ ] setup db (sqlite)
 - [ ] attach db to ui
 - [ ] error management (w/ Sentry)
 - [ ] new convo button
@@ -41,3 +42,8 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [ ] implement basic ChatGPT convo with Vercel AI
 - [ ] add tools
 - [ ] break up the UI into React components
+
+
+## Stuff I did
+pnpm dlx shadcn-ui@latest init
+npx v0 add TxkI58twHZ9
