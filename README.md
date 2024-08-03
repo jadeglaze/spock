@@ -31,17 +31,20 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 
 ## TODO
 - [x] Make it deploy (vercel)
-- [ ] Use uploadthing.com for images if I need any
 - [x] Scaffold basic UI with mock data (v0)
+- [x] break up the UI into React components
+- [x] send button
+- [x] implement basic ChatGPT convo with Vercel AI
+- [ ] Rename Spock to ConvoNav
+- [ ] Reconcile my Balloon component and BalloonProps with action.tsx ClientMessage interface 
+- [ ] add tools
 - [ ] figure out how to add unit tests
 - [ ] setup db (sqlite)
-- [ ] attach db to ui
-- [ ] error management (w/ Sentry)
+- [ ] save convo to DB as messages are added
 - [ ] new convo button
-- [ ] send button
-- [ ] implement basic ChatGPT convo with Vercel AI
-- [ ] add tools
-- [ ] break up the UI into React components
+- [ ] load convo from db when selected in convo nav
+- [ ] error management (w/ Sentry)
+- [ ] Use uploadthing.com for images if I need any
 
 
 ## Stuff I did
@@ -65,4 +68,4 @@ npx v0 add TxkI58twHZ9
 Put generated v0 component in top level of page.tsx
 Break up generated UI into nicer components: Balloon, Convo...
 Added a simple ai.ts script to play with Vercel AI SDK via command line.
-Got an example using Vercel's AI 
+Got an example using Vercel's ai/rsc and worked it into my Convo component. Might be overkill.
