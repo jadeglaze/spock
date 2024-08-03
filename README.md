@@ -64,3 +64,4 @@ pnpm dlx shadcn-ui@latest init
 npx v0 add TxkI58twHZ9
 Put generated v0 component in top level of page.tsx
 Break up generated UI into nicer components: Balloon, Convo...
+Added a simple ai.ts script to play with Vercel AI SDK via command line.
