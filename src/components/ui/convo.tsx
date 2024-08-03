@@ -7,7 +7,7 @@ import { Textarea } from "./textarea"
 import { Button } from "./button"
 import { useState } from "react"
 import { useActions, useUIState } from "ai/rsc"
-import { ClientMessage } from "~/app/examples/generate-ui-streamui/action"
+import { ClientMessage } from "~/app/action"
 import { nanoid } from "nanoid"
 
 
@@ -85,7 +85,7 @@ const Convo = (props: ConvoProps) => {
 Convo.displayName = "Convo"
 
 
-function ArrowUpIcon(props) {
+function ArrowUpIcon(props: any) {
   return (
     <svg
     {...props}

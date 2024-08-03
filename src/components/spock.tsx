@@ -78,7 +78,7 @@ export function Spock() {
 }
 
 
-function MoveVerticalIcon(props) {
+function MoveVerticalIcon(props: any) {
   return (
     <svg
       {...props}
@@ -100,7 +100,7 @@ function MoveVerticalIcon(props) {
 }
 
 
-function PlusIcon(props) {
+function PlusIcon(props: any) {
   return (
     <svg
       {...props}
