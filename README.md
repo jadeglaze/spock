@@ -35,7 +35,7 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [x] break up the UI into React components
 - [x] send button
 - [x] implement basic ChatGPT convo with Vercel AI
-- [ ] Rename Spock to ConvoNav
+- [x] Rename Spock to ConvoNav
 - [ ] Reconcile my Balloon component and BalloonProps with action.tsx ClientMessage interface 
 - [ ] add tools
 - [ ] figure out how to add unit tests

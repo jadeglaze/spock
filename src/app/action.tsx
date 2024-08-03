@@ -41,8 +41,21 @@ export async function continueConversation(
       return <div>{content}</div>;
     },
     tools: {
+      calcuator: {
+        description: "Do a mathematical calculation or find numerical properties of objects.",
+        parameters: z.object({
+          eqn: z.string().describe("the equasion to solve or the numerical question to answer"),
+        }),
+        generate: async function* ({ eqn }) {
+          yield <div>loading...</div>;
+          const wolframResult = 42;
+          return (
+            <div>{wolframResult}</div>
+          );
+        },
+      },
       tellAJoke: {
-        description: "Tell a joke",
+        description: "Tell a joke.",
         parameters: z.object({
           location: z.string().describe("the users location"),
         }),
