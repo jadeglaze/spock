@@ -3,7 +3,7 @@ import Link from "next/link"
 import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar"
 import { Convo } from "./ui/convo"
 
-export function Spock() {
+export function ConvoNav() {
   return (
     <div className="grid md:grid-cols-[300px_1fr] min-h-screen w-full bg-background">
       <div className="flex flex-col border-r bg-muted/40">

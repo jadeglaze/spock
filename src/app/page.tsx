@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { Spock } from "~/components/spock"
+import { ConvoNav } from "~/components/convonav"
 
 export default function HomePage() {
   return (
-    <Spock/>
+    <ConvoNav/>
   );
 }
