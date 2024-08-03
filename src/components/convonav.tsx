@@ -66,13 +66,7 @@ export function ConvoNav() {
           </div>
         </div>
       </div>
-      <Convo 
-        title="Conversation" 
-        messages={[
-          {isUser: true, who: "You", text: "Can you explain airplane turbulence?"}, 
-          {isUser: false, who: "Jippity", text: "Sure! I'm overly enthusiastic about everything!"}, 
-        ]}
-      />
+      <Convo title="Conversation" />
     </div>
   )
 }
