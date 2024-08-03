@@ -43,7 +43,9 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [ ] save convo to DB as messages are added
 - [ ] new convo button
 - [ ] load convo from db when selected in convo nav
+- [ ] handling of errors and edge cases
 - [ ] error management (w/ Sentry)
+- [ ] Add instructions to setup and run the app here in README
 - [ ] Use uploadthing.com for images if I need any
 
 
@@ -68,4 +70,4 @@ npx v0 add TxkI58twHZ9
 Put generated v0 component in top level of page.tsx
 Break up generated UI into nicer components: Balloon, Convo...
 Added a simple ai.ts script to play with Vercel AI SDK via command line.
-Got an example using Vercel's ai/rsc and worked it into my Convo component. Might be overkill.
+Got an example using Vercel's ai/rsc and worked it into my Convo component.
