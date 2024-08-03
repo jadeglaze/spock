@@ -77,7 +77,7 @@ async function main() {
             model: openai("gpt-4o"),
             prompt: `Tell me a joke that incorporates ${location} 
                      and it's current temperature 
-                     (${result.toolResults[0].result.temperature})`,
+                     (${result.toolResults[0]!.result.temperature})`,
         });
         for await (const textPart of joke.textStream) {
             process.stdout.write(textPart);
