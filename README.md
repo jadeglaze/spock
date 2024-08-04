@@ -37,7 +37,14 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [x] implement basic ChatGPT convo with Vercel AI
 - [x] Rename Spock to ConvoNav
 - [ ] Reconcile my Balloon component and BalloonProps with action.tsx ClientMessage interface 
-- [ ] add tools
+- [x] add WolframAlpha for calculator tool
+- [ ] Bug: missing handling of reject from WolframAlpha calls?
+- [ ] Bug: chat seems to just go off into la-la land and stop responding sometimes.
+- [ ] Bug: First message to chat disappears and gets used as a URL param for some reason.
+- [ ] add tool 2
+- [ ] add tool 3
+- [ ] Remove joke tool
+- [ ] Implement ReAct reasoning? (Actually I already seem to be getting answers to things like "population of NYC * 2" which requires ChatGPT first get pop of NYC then ask WolframAlpha to calc.)
 - [ ] figure out how to add unit tests
 - [ ] setup db (sqlite)
 - [ ] save convo to DB as messages are added

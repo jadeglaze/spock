@@ -47,10 +47,18 @@ export async function continueConversation(
           eqn: z.string().describe("the equasion to solve or the numerical question to answer"),
         }),
         generate: async function* ({ eqn }) {
-          yield <div>loading...</div>;
-          const wolframResult = 42;
+          yield <div>Asking WolframAlpha {eqn}...</div>;
+          // const wolframResult = 42;
+          const wolframShortAnswerUrl = `http://api.wolframalpha.com/v1/result?appid=${process.env.WOLFRAM_ALPHA_APP_ID}&i=${encodeURIComponent(eqn)}`;
+          let response = await fetch(
+            wolframShortAnswerUrl,
+            {
+                method: 'get',
+            });
+
+          const wolframResult = await response.text();
           return (
-            <div>{wolframResult}</div>
+            <div>According to WolframAlpha {eqn}={wolframResult}</div>
           );
         },
       },
@@ -60,7 +68,7 @@ export async function continueConversation(
           location: z.string().describe("the users location"),
         }),
         generate: async function* ({ location }) {
-          yield <div>loading...</div>;
+          yield <div>One moment, thinking funny thoughts...</div>;
           const joke = await generateObject({
             model: openai("gpt-4o"),
             schema: jokeSchema,
