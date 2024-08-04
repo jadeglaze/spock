@@ -41,7 +41,7 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [ ] Bug: missing handling of reject from WolframAlpha calls?
 - [ ] Bug: chat seems to just go off into la-la land and stop responding sometimes.
 - [ ] Bug: First message to chat disappears and gets used as a URL param for some reason.
-- [ ] add tool 2
+- [x] add QR code generator as a tool
 - [ ] add tool 3
 - [ ] Remove joke tool
 - [ ] Implement ReAct reasoning? (Actually I already seem to be getting answers to things like "population of NYC * 2" which requires ChatGPT first get pop of NYC then ask WolframAlpha to calc.)
@@ -78,3 +78,4 @@ Put generated v0 component in top level of page.tsx
 Break up generated UI into nicer components: Balloon, Convo...
 Added a simple ai.ts script to play with Vercel AI SDK via command line.
 Got an example using Vercel's ai/rsc and worked it into my Convo component.
+Added the QR code generator at api.qrserver.com as a second tool.

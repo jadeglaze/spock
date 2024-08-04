@@ -48,17 +48,49 @@ export async function continueConversation(
         }),
         generate: async function* ({ eqn }) {
           yield <div>Asking WolframAlpha {eqn}...</div>;
-          // const wolframResult = 42;
           const wolframShortAnswerUrl = `http://api.wolframalpha.com/v1/result?appid=${process.env.WOLFRAM_ALPHA_APP_ID}&i=${encodeURIComponent(eqn)}`;
           let response = await fetch(
             wolframShortAnswerUrl,
             {
                 method: 'get',
-            });
+            }
+          );
 
           const wolframResult = await response.text();
           return (
-            <div>According to WolframAlpha {eqn}={wolframResult}</div>
+            <div>
+              <p>Input: {eqn}</p>
+              <p>Result: {wolframResult}</p>
+              <p>(According to WolframAlpha)</p>
+            </div>
+          );
+        },
+      },
+      qr: {
+        description: "Create a QR code with any data the user wants. This is especially useful for transfering data from a computer to a phone or from one phone to another.",
+        parameters: z.object({
+          data: z.string().describe("The data to encode in the QR code."),
+          size: z.string().regex(new RegExp('[0-9]+x[0-9]+')).optional()
+            .describe("Specifies the size of the QR code image you want to generate (in px for raster graphic formats like png, gif or jpeg); as logical unit for vector graphics (svg, eps). The format should be [integer]x[integer] like 150x150."),
+          color: z.string().regex(new RegExp('[0-9a-fA-F]{6}')).optional()
+            .describe("Color of the foreground (data modules) as an RGB value in 6 character hex format like ff0000 for red or 556B2F for DarkOliveGreen."),
+          bgcolor: z.string().regex(new RegExp('[0-9a-fA-F]{6}')).optional()
+            .describe("Color of the background as an RGB value in 6 character hex format like ff0000 for red or 556B2F for DarkOliveGreen."),
+          margin: z.string().optional()
+            .describe("Thickness of the margin in pixels. The margin parameter will be ignored if svg or eps is used as QR code format."),
+          qzone: z.string().optional()
+            .describe("Thickness of the “quiet zone”, an area without disturbing elements to help readers locating the QR code, in modules as measuring unit. This means a value of 1 leads to a drawn margin around the QR code which is as thick as a data pixel/module of the QR code. The quiet zone will be drawn in addition to an eventually set margin value."),
+          format: z.union([z.literal("png"), z.literal("gif"), z.literal("jpg"), z.literal("jpeg"), z.literal("svg"), z.literal("eps")]).optional()
+            .describe("It is possible to create the QR code using different file formats, available formats are: png, gif, jpg, jpeg, svg, eps"),
+        }),
+        generate: async function* (params) {
+          yield <div>Creating QR code...</div>;
+          const url = buildUrl("https://api.qrserver.com/v1/create-qr-code/", params)
+          return (
+            <div>
+              <img src={url} alt="" title="" />
+              <p>Scan with your phone!</p>
+            </div>
           );
         },
       },
@@ -96,3 +128,12 @@ export const AI = createAI<ServerMessage[], ClientMessage[]>({
   initialAIState: [],
   initialUIState: [],
 });
+
+function buildUrl(baseUrl: string, params: Record<string, string | number | boolean>): string {
+  const url = new URL(baseUrl);
+  Object.keys(params).forEach(key => {
+    // url.searchParams.append(key, encodeURIComponent(params[key]!.toString()));
+    url.searchParams.append(key, params[key]!.toString());
+  });
+  return url.toString();
+}
