@@ -7,7 +7,7 @@ import { Textarea } from "~/components/ui/textarea"
 import { Button } from "~/components/ui/button"
 import { useState } from "react"
 import { useActions, useUIState } from "ai/rsc"
-import { ClientMessage } from "~/app/action"
+import { ClientMessage} from "~/app/action"
 import { nanoid } from "nanoid"
 
 
@@ -16,6 +16,16 @@ export default function Page({ params }: {params: {id: string}}) {
     const [conversation, setConversation] = useUIState();
     const { continueConversation } = useActions();
     
+    // Track if we've changed to a different convo, and if so, switch to it
+    const [prevConvoId, setPrevConvoId] = useState<string>();
+    console.log(`params.id=${params.id} prevConvoId=${prevConvoId}`)
+    console.log(conversation)
+    if (params.id !== prevConvoId) {
+        setPrevConvoId(params.id);
+        setInput("");
+        setConversation([]);
+    }
+
     return (
         <div className="flex flex-col">
             <div className="sticky top-0 flex items-center justify-between px-4 py-3 border-b bg-background">
