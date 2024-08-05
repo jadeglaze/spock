@@ -3,6 +3,9 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { AI } from "./action"
+import { Button } from "~/components/ui/button"
+import { ConvoLink } from "~/components/ui/convolink"
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -13,13 +16,78 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+
+  const dateFormat: Intl.DateTimeFormatOptions = {
+    month: 'short', 
+    day: 'numeric', 
+    hour12: true, 
+    hour: 'numeric', 
+    minute: 'numeric'
+  };
+
+  const conversations = [
+    {
+      id: 1,
+      title: new Date().toLocaleString(undefined, dateFormat),
+      link: "/convo/1",
+    },
+    {
+      id: 2,
+      title: new Date().toLocaleString(undefined, dateFormat),
+      link: "/convo/2",
+    },
+    {
+      id: 3,
+      title: new Date().toLocaleString(undefined, dateFormat),
+      link: "/convo/3",
+    },
+  ]
+  
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
-        <AI>
-          {children}
-        </AI>
+        <div className="grid md:grid-cols-[300px_1fr] min-h-screen w-full bg-background">
+          <div className="flex flex-col border-r bg-muted/40">
+            <div className="sticky top-0 flex items-center justify-between px-4 py-3 border-b">
+              <div className="text-lg font-medium"><Link href="/" prefetch={false}>Conversations</Link></div>
+              <Button variant="ghost" size="icon">
+                <PlusIcon className="w-5 h-5" />
+                <span className="sr-only">New Conversation</span>
+              </Button>
+            </div>
+            <div className="flex-1 overflow-auto">
+              <div className="grid gap-2 p-4">
+                {conversations.map(({id, title, link}) => (
+                  <ConvoLink href={link} key={id} title={title} />
+                ))}
+              </div>
+            </div>
+          </div>
+          <AI>
+            {children}
+          </AI>
+        </div>
       </body>
     </html>
   );
+}
+
+function PlusIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M5 12h14" />
+      <path d="M12 5v14" />
+    </svg>
+  )
 }

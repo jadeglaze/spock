@@ -36,15 +36,18 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [x] send button
 - [x] implement basic ChatGPT convo with Vercel AI
 - [x] Rename Spock to ConvoNav
-- [ ] Reconcile my Balloon component and BalloonProps with action.tsx ClientMessage interface 
+- [x] Reconcile my Balloon component and BalloonProps with action.tsx ClientMessage interface 
 - [x] add WolframAlpha for calculator tool
 - [ ] Bug: missing handling of reject from WolframAlpha calls?
 - [ ] Bug: chat seems to just go off into la-la land and stop responding sometimes.
 - [ ] Bug: First message to chat disappears and gets used as a URL param for some reason.
+- [x] Bug: Send button doesn't clear out the message in the textarea.
 - [x] add QR code generator as a tool
 - [ ] add tool 3
 - [ ] Remove joke tool
-- [ ] Implement ReAct reasoning? (Actually I already seem to be getting answers to things like "population of NYC * 2" which requires ChatGPT first get pop of NYC then ask WolframAlpha to calc.)
+- [ ] Implement ReAct reasoning? (It seems to be able to chain ChatGPT to one of the tools, but not one tool to another, which makes sense given the tools return React components (though maybe it still wouldn't do it).)
+- [ ] More ReActive: change Wolfram tool to return simple string answer.
+- [ ] More ReActive: change QR code tool to return... URL? (then consumer would need to know to put it in img tag to use it)
 - [ ] figure out how to add unit tests
 - [ ] setup db (sqlite)
 - [ ] save convo to DB as messages are added
@@ -54,6 +57,8 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [ ] error management (w/ Sentry)
 - [ ] Add instructions to setup and run the app here in README
 - [ ] Use uploadthing.com for images if I need any
+- [ ] Fix inconsistent tab width (ideally autoformat)
+- [ ] Bug: Active conversation is not selected in the left nav.
 
 
 ## Stuff I did
@@ -79,3 +84,5 @@ Break up generated UI into nicer components: Balloon, Convo...
 Added a simple ai.ts script to play with Vercel AI SDK via command line.
 Got an example using Vercel's ai/rsc and worked it into my Convo component.
 Added the QR code generator at api.qrserver.com as a second tool.
+Reworked the UI code to more correctly use Next.js page/layout conventions.
+Selecting an item from the left nav changes the url to specify a new conversation.

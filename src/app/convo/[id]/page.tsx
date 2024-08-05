@@ -1,25 +1,21 @@
 "use client";
 
 import * as React from "react"
-import { Avatar, AvatarFallback, AvatarImage } from "./avatar"
-import { Balloon, BalloonProps } from "./balloon"
-import { Textarea } from "./textarea"
-import { Button } from "./button"
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
+import { Balloon, BalloonProps } from "~/components/ui/balloon"
+import { Textarea } from "~/components/ui/textarea"
+import { Button } from "~/components/ui/button"
 import { useState } from "react"
 import { useActions, useUIState } from "ai/rsc"
 import { ClientMessage } from "~/app/action"
 import { nanoid } from "nanoid"
 
 
-export interface ConvoProps {
-  title: string,
-}
-
-const Convo = (props: ConvoProps) => {
+export default function Page({ params }: {params: {id: string}}) {
     const [input, setInput] = useState<string>("");
     const [conversation, setConversation] = useUIState();
     const { continueConversation } = useActions();
-      
+    
     return (
         <div className="flex flex-col">
             <div className="sticky top-0 flex items-center justify-between px-4 py-3 border-b bg-background">
@@ -28,7 +24,7 @@ const Convo = (props: ConvoProps) => {
                     <AvatarImage src="/placeholder-user.jpg" alt="Image" />
                     <AvatarFallback>OA</AvatarFallback>
                 </Avatar>
-                <div className="font-medium">{props.title}</div>
+                <div className="font-medium">{params.id}</div>
                 </div>
             </div>
             <div className="max-w-[1200px] flex-1 overflow-auto p-4">
@@ -82,7 +78,6 @@ const Convo = (props: ConvoProps) => {
         </div>
     )
 }
-Convo.displayName = "Convo"
 
 
 function ArrowUpIcon(props: any) {
@@ -104,6 +99,3 @@ function ArrowUpIcon(props: any) {
     </svg>
   )
 }
-  
-
-export { Convo }
