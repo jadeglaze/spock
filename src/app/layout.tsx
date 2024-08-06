@@ -2,7 +2,6 @@ import "~/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
-import { AI, loadChatFromDB, ServerMessage } from "./action"
 import { Button } from "~/components/ui/button"
 import { ConvoLink } from "~/components/ui/convolink"
 import Link from "next/link";
@@ -16,7 +15,6 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  // const conversation: ServerMessage[] = await loadChatFromDB();
 
   const dateFormat: Intl.DateTimeFormatOptions = {
     month: 'short', 
@@ -64,10 +62,7 @@ export default async function RootLayout({
               </div>
             </div>
           </div>
-          <AI>
-          {/* <AI initialAIState={conversation} initialUIState={[]}> */}
-            {children}
-          </AI>
+          {children}
         </div>
       </body>
     </html>

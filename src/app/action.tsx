@@ -1,6 +1,6 @@
 "use server";
 
-import { createAI, getAIState, getMutableAIState, streamUI } from "ai/rsc";
+import { getMutableAIState, streamUI } from "ai/rsc";
 import { openai } from "@ai-sdk/openai";
 import { ReactNode } from "react";
 import { z } from "zod";
@@ -9,6 +9,8 @@ import { JokeComponent } from "../components/ui/joke-component";
 import { generateObject } from "ai";
 import { jokeSchema } from "./joke";
 import { db } from "~/server/db";
+import { eq } from "drizzle-orm";
+import { messages } from "~/server/db/schema";
 
 export interface ServerMessage {
   role: "user" | "assistant";
@@ -128,47 +130,6 @@ export async function continueConversation(
   };
 }
 
-export const AI = createAI<ServerMessage[], ClientMessage[]>({
-  actions: {
-    continueConversation,
-  },
-  onSetAIState: async ({ state, done }) => {
-    'use server';
-
-    if (done) {
-      saveChatToDB(state);
-    }
-  },
-  onGetUIState: async () => {
-    'use server';
-
-    console.log("onGetUIState");
-
-
-    const historyFromDB: ServerMessage[] = await loadChatFromDB();
-    const historyFromApp: ServerMessage[] = getAIState() as ServerMessage[];
-
-    // If the history from the database is different from the
-    // history in the app, they're not in sync so return the UIState
-    // based on the history from the database
-
-    if (historyFromDB.length !== historyFromApp.length) {
-      return historyFromDB.map(({ role, content }) => ({
-        id: nanoid(),
-        role,
-        display: content
-          // role === 'function' ? (
-          //   <Component {...JSON.parse(content)} />
-          // ) : (
-          //   content
-          // ),
-      }));
-    }
-  },  
-  initialAIState: [],
-  initialUIState: [],
-});
-
 function buildUrl(baseUrl: string, params: Record<string, string | number | boolean>): string {
   const url = new URL(baseUrl);
   Object.keys(params).forEach(key => {
@@ -177,21 +138,18 @@ function buildUrl(baseUrl: string, params: Record<string, string | number | bool
   return url.toString();
 }
 
-function saveChatToDB(state: ServerMessage[]) {
-  console.log("saveChatToDB");
+export async function saveChatToDB(conversationId: number, state: ServerMessage[]) {
+  console.log(`saveChatToDB conversationId=${conversationId}`);
   console.log(state);
 }
 
-export async function loadChatFromDB(): Promise<ServerMessage[]> {
-  console.log("loadChatFromDB");
-  const messages = await db.query.messages.findMany();
-  console.log(messages);
-  // const chat = posts.map(({name, createdAt}) => ({
-  //   role: (name as "user" | "assistant")!, 
-  //   content: createdAt.toLocaleDateString()
-  // }));
-  // console.log(chat);
-  const chat = messages as ServerMessage[];
+export async function loadChatFromDB(conversationId: number): Promise<ServerMessage[]> {
+  console.log(`loadChatFromDB conversationId=${conversationId}`);
+  const results = await db.query.messages.findMany({
+    where: eq(messages.conversationId, conversationId)
+  });
+  console.log(results);
+  const chat = results as ServerMessage[];
   console.log(chat);
   return chat;
 }

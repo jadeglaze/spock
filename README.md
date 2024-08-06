@@ -38,27 +38,28 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [x] Rename Spock to ConvoNav
 - [x] Reconcile my Balloon component and BalloonProps with action.tsx ClientMessage interface 
 - [x] add WolframAlpha for calculator tool
-- [ ] Bug: missing handling of reject from WolframAlpha calls?
-- [ ] Bug: chat seems to just go off into la-la land and stop responding sometimes.
-- [ ] Bug: First message to chat disappears and gets used as a URL param for some reason.
 - [x] Bug: Send button doesn't clear out the message in the textarea.
 - [x] add QR code generator as a tool
+- [x] setup db (sqlite)
+- [x] load convo messages from db when selected in convo nav
+- [ ] load actual list of conversations from DB into left nav
+- [ ] new convo button
+- [ ] save convo to DB as messages are added
 - [ ] add tool 3
 - [ ] Remove joke tool
 - [ ] Implement ReAct reasoning? (It seems to be able to chain ChatGPT to one of the tools, but not one tool to another, which makes sense given the tools return React components (though maybe it still wouldn't do it).)
 - [ ] More ReActive: change Wolfram tool to return simple string answer.
 - [ ] More ReActive: change QR code tool to return... URL? (then consumer would need to know to put it in img tag to use it)
 - [ ] figure out how to add unit tests
-- [ ] setup db (sqlite)
-- [ ] save convo to DB as messages are added
-- [ ] new convo button
-- [ ] load convo from db when selected in convo nav
 - [ ] handling of errors and edge cases
 - [ ] error management (w/ Sentry)
 - [ ] Add instructions to setup and run the app here in README
 - [ ] Use uploadthing.com for images if I need any
-- [ ] Fix inconsistent tab width (ideally autoformat)
+- [ ] Fix inconsistent tab width in code (ideally autoformat)
 - [ ] Bug: Active conversation is not selected in the left nav.
+- [ ] Bug: missing handling of reject from WolframAlpha calls?
+- [ ] Bug: chat seems to just go off into la-la land and stop responding sometimes.
+- [ ] Bug: First message to chat disappears and gets used as a URL param for some reason.
 
 
 ## Stuff I did
@@ -86,3 +87,4 @@ Got an example using Vercel's ai/rsc and worked it into my Convo component.
 Added the QR code generator at api.qrserver.com as a second tool.
 Reworked the UI code to more correctly use Next.js page/layout conventions.
 Selecting an item from the left nav changes the url to specify a new conversation.
+Oof. Finally figured out the (simple in retrospect) use of multiple AI providers so a sketch of loading from DB is working now.
