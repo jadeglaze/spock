@@ -42,11 +42,12 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [x] add QR code generator as a tool
 - [x] setup db (sqlite)
 - [x] load convo messages from db when selected in convo nav
-- [ ] load actual list of conversations from DB into left nav
-- [ ] new convo button
+- [x] load actual list of conversations from DB into left nav
+- [x] new convo button
 - [ ] save convo to DB as messages are added
 - [ ] add tool 3
 - [ ] Remove joke tool
+- [ ] Tools: I saw examples that seem to simultaneously stream back UI but return plain text. Check this out for saving as text while also returning components from tools.
 - [ ] Implement ReAct reasoning? (It seems to be able to chain ChatGPT to one of the tools, but not one tool to another, which makes sense given the tools return React components (though maybe it still wouldn't do it).)
 - [ ] More ReActive: change Wolfram tool to return simple string answer.
 - [ ] More ReActive: change QR code tool to return... URL? (then consumer would need to know to put it in img tag to use it)
@@ -88,3 +89,4 @@ Added the QR code generator at api.qrserver.com as a second tool.
 Reworked the UI code to more correctly use Next.js page/layout conventions.
 Selecting an item from the left nav changes the url to specify a new conversation.
 Oof. Finally figured out the (simple in retrospect) use of multiple AI providers so a sketch of loading from DB is working now.
+Load conversation list from DB to left nav and implement new conversation button.

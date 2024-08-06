@@ -17,14 +17,14 @@ export default function Page({ params }: {params: {id: string}}) {
     const { continueConversation } = useActions();
     
     // Track if we've changed to a different convo, and if so, switch to it
-    const [prevConvoId, setPrevConvoId] = useState<string>();
-    console.log(`params.id=${params.id} prevConvoId=${prevConvoId}`)
-    console.log(conversation)
-    if (params.id !== prevConvoId) {
-        setPrevConvoId(params.id);
-        setInput("");
-        // setConversation([]);
-    }
+    // const [prevConvoId, setPrevConvoId] = useState<string>();
+    // console.log(`params.id=${params.id} prevConvoId=${prevConvoId}`)
+    // console.log(conversation)
+    // if (params.id !== prevConvoId) {
+    //     setPrevConvoId(params.id);
+    //     setInput("");
+    //     // setConversation([]);
+    // }
 
     return (
         <div className="flex flex-col">

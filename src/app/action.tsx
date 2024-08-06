@@ -2,7 +2,7 @@
 
 import { getMutableAIState, streamUI } from "ai/rsc";
 import { openai } from "@ai-sdk/openai";
-import { ReactNode } from "react";
+import { cache, ReactNode } from "react";
 import { z } from "zod";
 import { nanoid } from "nanoid";
 import { JokeComponent } from "../components/ui/joke-component";
@@ -10,7 +10,9 @@ import { generateObject } from "ai";
 import { jokeSchema } from "./joke";
 import { db } from "~/server/db";
 import { eq } from "drizzle-orm";
-import { messages } from "~/server/db/schema";
+import { conversations, messages } from "~/server/db/schema";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export interface ServerMessage {
   role: "user" | "assistant";
@@ -152,4 +154,12 @@ export async function loadChatFromDB(conversationId: number): Promise<ServerMess
   const chat = results as ServerMessage[];
   console.log(chat);
   return chat;
+}
+
+export async function newConversation() {
+  console.log("newConversation");
+  const { insertedId } = (await db.insert(conversations).values({}).returning({insertedId: conversations.id}))[0]!;
+  console.log(`convo=${insertedId}`)
+  revalidatePath("/", "layout");
+  redirect(`/convo/${insertedId.toString()}`);
 }
