@@ -45,7 +45,8 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [x] load actual list of conversations from DB into left nav
 - [x] new convo button
 - [x] Bug: Active conversation is not selected in the left nav.
-- [ ] save convo to DB as messages are added
+- [ ] Save convo to DB as messages are added
+- [ ] Actually make it round trip (to db and back) the rich convos properly
 - [ ] add tool 3
 - [ ] Remove joke tool
 - [ ] Tools: I saw examples that seem to simultaneously stream back UI but return plain text. Check this out for saving as text while also returning components from tools.
@@ -53,14 +54,10 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [ ] More ReActive: change Wolfram tool to return simple string answer.
 - [ ] More ReActive: change QR code tool to return... URL? (then consumer would need to know to put it in img tag to use it)
 - [ ] figure out how to add unit tests
-- [ ] handling of errors and edge cases
+- [ ] handling of errors and edge cases (e.g.: Bug: missing handling of reject from WolframAlpha calls?)
 - [ ] error management (w/ Sentry)
 - [ ] Add instructions to setup and run the app here in README
-- [ ] Use uploadthing.com for images if I need any
 - [ ] Fix inconsistent tab width in code (ideally autoformat)
-- [ ] Bug: missing handling of reject from WolframAlpha calls?
-- [ ] Bug: chat seems to just go off into la-la land and stop responding sometimes.
-- [ ] Bug: First message to chat disappears and gets used as a URL param for some reason.
 
 
 ## Stuff I did
