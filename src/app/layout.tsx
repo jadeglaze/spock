@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const conversation: ServerMessage[] = await loadChatFromDB();
+  // const conversation: ServerMessage[] = await loadChatFromDB();
 
   const dateFormat: Intl.DateTimeFormatOptions = {
     month: 'short', 
@@ -64,7 +64,8 @@ export default async function RootLayout({
               </div>
             </div>
           </div>
-          <AI initialAIState={conversation} initialUIState={[]}>
+          <AI>
+          {/* <AI initialAIState={conversation} initialUIState={[]}> */}
             {children}
           </AI>
         </div>

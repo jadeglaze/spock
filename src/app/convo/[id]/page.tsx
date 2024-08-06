@@ -23,7 +23,7 @@ export default function Page({ params }: {params: {id: string}}) {
     if (params.id !== prevConvoId) {
         setPrevConvoId(params.id);
         setInput("");
-        setConversation([]);
+        // setConversation([]);
     }
 
     return (

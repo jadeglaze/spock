@@ -1,6 +1,6 @@
 "use server";
 
-import { createAI, getMutableAIState, streamUI } from "ai/rsc";
+import { createAI, getAIState, getMutableAIState, streamUI } from "ai/rsc";
 import { openai } from "@ai-sdk/openai";
 import { ReactNode } from "react";
 import { z } from "zod";
@@ -8,6 +8,9 @@ import { nanoid } from "nanoid";
 import { JokeComponent } from "../components/ui/joke-component";
 import { generateObject } from "ai";
 import { jokeSchema } from "./joke";
+import { db } from "~/server/db";
+import { root } from ".eslintrc.cjs";
+import { CornerDownLeft } from "lucide-react";
 
 export interface ServerMessage {
   role: "user" | "assistant";
@@ -138,29 +141,32 @@ export const AI = createAI<ServerMessage[], ClientMessage[]>({
       saveChatToDB(state);
     }
   },
-  // onGetUIState: async () => {
-  //   'use server';
+  onGetUIState: async () => {
+    'use server';
 
-  //   const historyFromDB: ServerMessage[] = await loadChatFromDB();
-  //   const historyFromApp: ServerMessage[] = getAIState();
+    console.log("onGetUIState");
 
-  //   // If the history from the database is different from the
-  //   // history in the app, they're not in sync so return the UIState
-  //   // based on the history from the database
 
-  //   if (historyFromDB.length !== historyFromApp.length) {
-  //     return historyFromDB.map(({ role, content }) => ({
-  //       id: generateId(),
-  //       role,
-  //       display:
-  //         role === 'function' ? (
-  //           <Component {...JSON.parse(content)} />
-  //         ) : (
-  //           content
-  //         ),
-  //     }));
-  //   }
-  // },  
+    const historyFromDB: ServerMessage[] = await loadChatFromDB();
+    const historyFromApp: ServerMessage[] = getAIState() as ServerMessage[];
+
+    // If the history from the database is different from the
+    // history in the app, they're not in sync so return the UIState
+    // based on the history from the database
+
+    if (historyFromDB.length !== historyFromApp.length) {
+      return historyFromDB.map(({ role, content }) => ({
+        id: nanoid(),
+        role,
+        display: content
+          // role === 'function' ? (
+          //   <Component {...JSON.parse(content)} />
+          // ) : (
+          //   content
+          // ),
+      }));
+    }
+  },  
   initialAIState: [],
   initialUIState: [],
 });
@@ -180,5 +186,14 @@ function saveChatToDB(state: ServerMessage[]) {
 
 export async function loadChatFromDB(): Promise<ServerMessage[]> {
   console.log("loadChatFromDB");
-  return [];
+  const messages = await db.query.messages.findMany();
+  console.log(messages);
+  // const chat = posts.map(({name, createdAt}) => ({
+  //   role: (name as "user" | "assistant")!, 
+  //   content: createdAt.toLocaleDateString()
+  // }));
+  // console.log(chat);
+  const chat = messages as ServerMessage[];
+  console.log(chat);
+  return chat;
 }
