@@ -1,32 +1,22 @@
-# Create T3 App
+# Spock 🖖
+
+My first thought was to call this project Spock. Upon further reflection, I think Kirk would be a better name.
+This reflects the reality that we (as much as I don't like speaking for all of civilization) always thought AI, when it came, would solve the logical problems that people were bad at.
+Instead, the emergence of GenAI/LLMs has disrupted mostly creative - emotional - fields where we never thought it would play.
+Kirk.
+Not Spock.
+QED LLAP 🖖
+
+## Tech
 
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
-
-## What's next? How do I make an app with this?
-
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
-
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+It makes use of:
 
 - [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
 - [Drizzle](https://orm.drizzle.team)
 - [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
 
-## Learn More
-
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
-
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+It's hosted on [Vercel](https://vercel.com/) and I used [v0](https://v0.dev/) for the initial UI design.
 
 
 ## TODO
@@ -59,32 +49,35 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [ ] Add instructions to setup and run the app here in README
 - [ ] Fix inconsistent tab width in code (ideally autoformat)
 
+## Weaknesses
+- Don't really like the auto-increment DB IDs but it's fine for this toy.
+- Can't delete convos.
 
-## Stuff I did
-Learn a bunch about v0, Create T3 App (This is my first React app and first TypeScript app.)
-Learn about ReAct prompting (I basically knew the idea and CoT as well, just didn't know the name "ReAct")
-Explored lots of free public APIs to potentially use as tools.
-(Install VSCode)
-(Install pnpm)
-pnpm create t3-app@latest
-pnpm db:push
-git commit -m "initial commit"
-pnpm dev
-(brew install gh)
-(gh auth login)
-gh repo create
-Created Vercel project from GitHub repo
-Added DB environment var to Vercel project to it can deploy to prod (automatically on push to main)
-Use v0 to kick start a UI
-pnpm dlx shadcn-ui@latest init
-npx v0 add TxkI58twHZ9
-Put generated v0 component in top level of page.tsx
-Break up generated UI into nicer components: Balloon, Convo...
-Added a simple ai.ts script to play with Vercel AI SDK via command line.
-Got an example using Vercel's ai/rsc and worked it into my Convo component.
-Added the QR code generator at api.qrserver.com as a second tool.
-Reworked the UI code to more correctly use Next.js page/layout conventions.
-Selecting an item from the left nav changes the url to specify a new conversation.
-Oof. Finally figured out the (simple in retrospect) use of multiple AI providers so a sketch of loading from DB is working now.
-Load conversation list from DB to left nav and implement new conversation button.
-Active convo now selected in left nav list.
+## Captain's Log
+- Learn a bunch about v0, Create T3 App (This is my first React app and first TypeScript app.)
+- Learn about ReAct prompting (I basically knew the idea and CoT as well, just didn't know the name "ReAct")
+- Explored lots of free public APIs to potentially use as tools.
+- (Install VSCode)
+- (Install pnpm)
+- pnpm create t3-app@latest
+- pnpm db:push
+- git commit -m "initial commit"
+- pnpm dev
+- (brew install gh)
+- (gh auth login)
+- gh repo create
+- Created Vercel project from GitHub repo
+- Added DB environment var to Vercel project to it can deploy to prod (automatically on push to main)
+- Use v0 to kick start a UI
+- pnpm dlx shadcn-ui@latest init
+- npx v0 add TxkI58twHZ9
+- Put generated v0 component in top level of page.tsx
+- Break up generated UI into nicer components: Balloon, Convo...
+- Added a simple ai.ts script to play with Vercel AI SDK via command line.
+- Got an example using Vercel's ai/rsc and worked it into my Convo component.
+- Added the QR code generator at api.qrserver.com as a second tool.
+- Reworked the UI code to more correctly use Next.js page/layout conventions.
+- Selecting an item from the left nav changes the url to specify a new conversation.
+- Oof. Finally figured out the (simple in retrospect) use of multiple AI providers so a sketch of loading from DB is working now.
+- Load conversation list from DB to left nav and implement new conversation button.
+- Active convo now selected in left nav list.
