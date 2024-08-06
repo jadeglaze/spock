@@ -9,8 +9,6 @@ import { JokeComponent } from "../components/ui/joke-component";
 import { generateObject } from "ai";
 import { jokeSchema } from "./joke";
 import { db } from "~/server/db";
-import { root } from ".eslintrc.cjs";
-import { CornerDownLeft } from "lucide-react";
 
 export interface ServerMessage {
   role: "user" | "assistant";
