@@ -44,6 +44,7 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [x] load convo messages from db when selected in convo nav
 - [x] load actual list of conversations from DB into left nav
 - [x] new convo button
+- [x] Bug: Active conversation is not selected in the left nav.
 - [ ] save convo to DB as messages are added
 - [ ] add tool 3
 - [ ] Remove joke tool
@@ -57,7 +58,6 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [ ] Add instructions to setup and run the app here in README
 - [ ] Use uploadthing.com for images if I need any
 - [ ] Fix inconsistent tab width in code (ideally autoformat)
-- [ ] Bug: Active conversation is not selected in the left nav.
 - [ ] Bug: missing handling of reject from WolframAlpha calls?
 - [ ] Bug: chat seems to just go off into la-la land and stop responding sometimes.
 - [ ] Bug: First message to chat disappears and gets used as a URL param for some reason.
@@ -90,3 +90,4 @@ Reworked the UI code to more correctly use Next.js page/layout conventions.
 Selecting an item from the left nav changes the url to specify a new conversation.
 Oof. Finally figured out the (simple in retrospect) use of multiple AI providers so a sketch of loading from DB is working now.
 Load conversation list from DB to left nav and implement new conversation button.
+Active convo now selected in left nav list.
