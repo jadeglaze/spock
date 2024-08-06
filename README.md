@@ -35,7 +35,11 @@ It's hosted on [Vercel](https://vercel.com/) and I used [v0](https://v0.dev/) fo
 - [x] load actual list of conversations from DB into left nav
 - [x] new convo button
 - [x] Bug: Active conversation is not selected in the left nav.
-- [ ] Save convo to DB as messages are added
+- [x] Save convo to DB: figure out why only assistant messages are added
+- [x] Save convo to DB: implement proper dehydration/hydration of react messages
+- [ ] Save convo to DB: Figure out why it doesn't seem to always refresh display of messages from DB.
+- [ ] Save convo to DB: upsert instead of reinserting all messages each time (switch to nanoid in DB somehow?)
+- [ ] Bug: It seems to "take a few tries" to start adding convos/messages from a blank DB. Not sure why.
 - [ ] Actually make it round trip (to db and back) the rich convos properly
 - [ ] add tool 3
 - [ ] Remove joke tool
@@ -81,3 +85,4 @@ It's hosted on [Vercel](https://vercel.com/) and I used [v0](https://v0.dev/) fo
 - Oof. Finally figured out the (simple in retrospect) use of multiple AI providers so a sketch of loading from DB is working now.
 - Load conversation list from DB to left nav and implement new conversation button.
 - Active convo now selected in left nav list.
+- Moar DB message saving/rehydrating work.

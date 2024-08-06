@@ -1,6 +1,11 @@
+import { UnsupportedJSONSchemaError } from "ai";
 import { createAI, getAIState } from "ai/rsc";
 import { nanoid } from "nanoid";
+import { ReactNode } from "react";
 import { ClientMessage, continueConversation, loadChatFromDB, saveChatToDB, ServerMessage } from "~/app/action"
+import { JokeComponent } from "~/components/ui/joke-component";
+import { QRComponent } from "~/components/ui/qr-component";
+import { WolframAlphaComponent } from "~/components/ui/wolframalpha-component";
 
 export default async function AIProviderWrapperLayout({
   children,
@@ -9,9 +14,6 @@ export default async function AIProviderWrapperLayout({
     console.log(`AIProviderWrapperLayout with id=${params.id}`)
     const conversationId = parseInt(params.id)!;
 
-    // TODO: Can get the conversation ID param here so
-    //  - can load the appopriate convo from the DB
-    //  - can pass functions to the AI provider that close around the ID
     const AI = createAI<ServerMessage[], ClientMessage[]>({
         actions: {
           continueConversation,
@@ -36,14 +38,9 @@ export default async function AIProviderWrapperLayout({
         
             if (historyFromDB.length !== historyFromApp.length) {
                 return historyFromDB.map(({ role, content }) => ({
-                id: nanoid(),
-                role,
-                display: content
-                    // role === 'function' ? (
-                    //   <Component {...JSON.parse(content)} />
-                    // ) : (
-                    //   content
-                    // ),
+                    id: nanoid(),
+                    role,
+                    display: hydrateComponentForContent(content)
                 }));
             }
         },
@@ -56,4 +53,20 @@ export default async function AIProviderWrapperLayout({
             {children}
         </AI>
     );
+}
+
+function hydrateComponentForContent(content: string): ReactNode {
+    const { kind, data } = JSON.parse(content);
+    switch (kind) {
+      case "joke":
+        return <JokeComponent joke={data} />
+      case "qr":
+        return <QRComponent url={data} />
+      case "wolframAlpha":
+        return <WolframAlphaComponent input={data.input} result={data.result} />
+      case "text":
+        return <div>{data}</div>
+      default:
+        throw new UnsupportedJSONSchemaError({schema: kind, reason: "Because Jade didn't do that yet."})
+    }
 }
