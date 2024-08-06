@@ -37,13 +37,11 @@ It's hosted on [Vercel](https://vercel.com/) and I used [v0](https://v0.dev/) fo
 - [x] Bug: Active conversation is not selected in the left nav.
 - [x] Save convo to DB: figure out why only assistant messages are added
 - [x] Save convo to DB: implement proper dehydration/hydration of react messages
-- [ ] Save convo to DB: Figure out why it doesn't seem to always refresh display of messages from DB.
 - [ ] Save convo to DB: upsert instead of reinserting all messages each time (switch to nanoid in DB somehow?)
+- [ ] Save convo to DB: Figure out why it doesn't seem to always refresh display of messages from DB.
 - [ ] Bug: It seems to "take a few tries" to start adding convos/messages from a blank DB. Not sure why.
-- [ ] Actually make it round trip (to db and back) the rich convos properly
 - [ ] add tool 3
 - [ ] Remove joke tool
-- [ ] Tools: I saw examples that seem to simultaneously stream back UI but return plain text. Check this out for saving as text while also returning components from tools.
 - [ ] Implement ReAct reasoning? (It seems to be able to chain ChatGPT to one of the tools, but not one tool to another, which makes sense given the tools return React components (though maybe it still wouldn't do it).)
 - [ ] More ReActive: change Wolfram tool to return simple string answer.
 - [ ] More ReActive: change QR code tool to return... URL? (then consumer would need to know to put it in img tag to use it)
