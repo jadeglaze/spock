@@ -6,7 +6,7 @@ import { Balloon } from "~/components/ui/balloon"
 import { Textarea } from "~/components/ui/textarea"
 import { Button } from "~/components/ui/button"
 import { useState } from "react"
-import { useActions, useUIState } from "ai/rsc"
+import { useActions, useAIState, useUIState } from "ai/rsc"
 import { ClientMessage} from "~/app/action"
 import { nanoid } from "nanoid"
 
@@ -14,7 +14,14 @@ import { nanoid } from "nanoid"
 export default function Page({ params }: {params: {id: string}}) {
     const [input, setInput] = useState<string>("");
     const [conversation, setConversation] = useUIState();
+    const [aiConvo, setAiConvo] = useAIState();
     const { continueConversation } = useActions();
+
+    console.log()
+    console.log("UI State")
+    console.log(conversation)
+    console.log("AI State")
+    console.log(aiConvo)
     
     return (
         <div className="flex flex-col">
@@ -41,14 +48,15 @@ export default function Page({ params }: {params: {id: string}}) {
             <div className="max-w-[1200px] sticky bottom-0 bg-background py-2 px-4">
                 <form
                     onSubmit={async (e) => {
+                        const newUserId = nanoid();
                         e.preventDefault();
                         setInput("");
                         setConversation((currentConversation: ClientMessage[]) => [
                             ...currentConversation,
-                            { id: nanoid(), role: "user", display: input },
+                            { id: newUserId, role: "user", display: input },
                         ]);
             
-                        const message = await continueConversation(input);
+                        const message = await continueConversation(newUserId, input);
             
                         setConversation((currentConversation: ClientMessage[]) => [
                             ...currentConversation,

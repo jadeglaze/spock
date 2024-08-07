@@ -24,28 +24,31 @@ export default async function AIProviderWrapperLayout({
               saveMessagesToDB(conversationId, state);
             }
         },
-        onGetUIState: async () => {
-            'use server';
+        // onGetUIState: async () => {
+        //     'use server';
         
-            console.log("onGetUIState");
-            const historyFromDB: ServerMessage[] = await loadMessagesFromDB(conversationId);
-            const historyFromApp: ServerMessage[] = getAIState() as ServerMessage[];
+        //     console.log("onGetUIState");
+        //     const historyFromDB: ServerMessage[] = await loadMessagesFromDB(conversationId);
+        //     const historyFromApp: ServerMessage[] = getAIState() as ServerMessage[];
         
-            // If the history from the database is different from the
-            // history in the app, they're not in sync so return the UIState
-            // based on the history from the database
+        //     // If the history from the database is different from the
+        //     // history in the app, they're not in sync so return the UIState
+        //     // based on the history from the database
         
-            if (historyFromDB.length !== historyFromApp.length) {
-                return historyFromDB.map(({ id, role, content }) => ({
-                    id,
-                    role,
-                    display: hydrateComponentForContent(content)
-                }));
-            }
-        },
-        // initialAIState: await loadMessagesFromDB(conversationId),
-        initialAIState: [],
-        initialUIState: [],
+        //     if (historyFromDB.length !== historyFromApp.length) {
+        //         return historyFromDB.map(({ id, role, content }) => ({
+        //             id,
+        //             role,
+        //             display: hydrateComponentForContent(content)
+        //         }));
+        //     }
+        // },
+        initialAIState: await loadMessagesFromDB(conversationId),
+        initialUIState: (await loadMessagesFromDB(conversationId)).map(({ id, role, content }: ServerMessage) => ({
+          id,
+          role,
+          display: hydrateComponentForContent(content)
+        })),
     });
 
     return (

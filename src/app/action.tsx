@@ -29,12 +29,11 @@ export interface ClientMessage {
 }
 
 export async function continueConversation(
-  input: string,
+  newUserId: string, input: string,
 ): Promise<ClientMessage> {
   "use server";
 
   const history = getMutableAIState();
-  const newUserId = nanoid();
   const newAsstId = nanoid();
 
   history.update((messages: ServerMessage[]) => [
@@ -146,7 +145,6 @@ function buildUrl(baseUrl: string, params: Record<string, string | number | bool
 
 export async function saveMessagesToDB(convoId: number, state: ServerMessage[]) {
   console.log(`saveChatToDB conversationId=${convoId}`);
-  console.log(state);
 
   const messageList = state.map(({id, role, content}: ServerMessage) => ({
     id,

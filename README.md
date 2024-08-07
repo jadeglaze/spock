@@ -43,7 +43,7 @@ It's hosted on [Vercel](https://vercel.com/) and I used [v0](https://v0.dev/) fo
 - [ ] Bug: Sometimes assistant message (plain text) appears as JSON string in UI.
 - [ ] Bug: It seems to "take a few tries" to start adding convos/messages from a blank DB. Not sure why.
 - [ ] Bug: UI left nav and chat window scroll together.
-- [ ] Bug: Contents of left nav and chat window are visible through UI titles when scrolled behind.
+- [x] Bug: Contents of left nav and chat window are visible through UI titles when scrolled behind.
 - [ ] add tool 3
 - [ ] Remove joke tool
 - [ ] Implement ReAct reasoning? (It seems to be able to chain ChatGPT to one of the tools, but not one tool to another, which makes sense given the tools return React components (though maybe it still wouldn't do it).)
