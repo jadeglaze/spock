@@ -43,6 +43,7 @@ export default async function AIProviderWrapperLayout({
                 }));
             }
         },
+        // initialAIState: await loadMessagesFromDB(conversationId),
         initialAIState: [],
         initialUIState: [],
     });
