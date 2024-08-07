@@ -14,15 +14,8 @@ import { nanoid } from "nanoid"
 export default function Page({ params }: {params: {id: string}}) {
     const [input, setInput] = useState<string>("");
     const [conversation, setConversation] = useUIState();
-    const [aiConvo, setAiConvo] = useAIState();
     const { continueConversation } = useActions();
 
-    console.log()
-    console.log("UI State")
-    console.log(conversation)
-    console.log("AI State")
-    console.log(aiConvo)
-    
     return (
         <div className="flex flex-col">
             <div className="sticky top-0 bg-input flex items-center justify-between px-4 py-3 border-b bg-background">

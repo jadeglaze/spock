@@ -38,10 +38,9 @@ It's hosted on [Vercel](https://vercel.com/) and I used [v0](https://v0.dev/) fo
 - [x] Save convo to DB: figure out why only assistant messages are added
 - [x] Save convo to DB: implement proper dehydration/hydration of react messages
 - [x] Save convo to DB: upsert instead of reinserting all messages each time (switch to nanoid as db id)
-- [ ] MAJOR BUG: The agent loses the convo history even though it's visible in the UI. InitialAIState?
-- [ ] Save convo to DB: Figure out why it doesn't seem to always refresh display of messages from DB.
-- [ ] Bug: Sometimes assistant message (plain text) appears as JSON string in UI.
-- [ ] Bug: It seems to "take a few tries" to start adding convos/messages from a blank DB. Not sure why.
+- [x] MAJOR BUG: The agent loses the convo history even though it's visible in the UI. InitialAIState?
+- [ ] Bug: Figure out why it doesn't seem to always refresh display of the most recent message when switching convos and switching back.
+- [x] Bug: Sometimes assistant message (plain text) appears as JSON string in UI. (Hilariously this was ChatGPT thinking it was being helpful.)
 - [ ] Bug: UI left nav and chat window scroll together.
 - [x] Bug: Contents of left nav and chat window are visible through UI titles when scrolled behind.
 - [ ] add tool 3
