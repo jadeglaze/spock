@@ -37,8 +37,9 @@ It's hosted on [Vercel](https://vercel.com/) and I used [v0](https://v0.dev/) fo
 - [x] Bug: Active conversation is not selected in the left nav.
 - [x] Save convo to DB: figure out why only assistant messages are added
 - [x] Save convo to DB: implement proper dehydration/hydration of react messages
-- [ ] Save convo to DB: upsert instead of reinserting all messages each time (switch to nanoid in DB somehow?)
+- [x] Save convo to DB: upsert instead of reinserting all messages each time (switch to nanoid as db id)
 - [ ] Save convo to DB: Figure out why it doesn't seem to always refresh display of messages from DB.
+- [ ] Bug: Sometimes assistant message (plain text) appears as JSON string in UI.
 - [ ] Bug: It seems to "take a few tries" to start adding convos/messages from a blank DB. Not sure why.
 - [ ] add tool 3
 - [ ] Remove joke tool
@@ -54,6 +55,8 @@ It's hosted on [Vercel](https://vercel.com/) and I used [v0](https://v0.dev/) fo
 ## Weaknesses
 - Don't really like the auto-increment DB IDs but it's fine for this toy.
 - Can't delete convos.
+- There's no priming the bot with guidelines.
+- Drizzle seems to kinda suck at updating the DB to match the schema.
 
 ## Captain's Log
 - Learn a bunch about v0, Create T3 App (This is my first React app and first TypeScript app.)

@@ -1,8 +1,7 @@
 import { UnsupportedJSONSchemaError } from "ai";
 import { createAI, getAIState } from "ai/rsc";
-import { nanoid } from "nanoid";
 import { ReactNode } from "react";
-import { ClientMessage, continueConversation, loadChatFromDB, saveChatToDB, ServerMessage } from "~/app/action"
+import { ClientMessage, continueConversation, loadMessagesFromDB, saveMessagesToDB, ServerMessage } from "~/app/action"
 import { JokeComponent } from "~/components/ui/joke-component";
 import { QRComponent } from "~/components/ui/qr-component";
 import { WolframAlphaComponent } from "~/components/ui/wolframalpha-component";
@@ -12,7 +11,7 @@ export default async function AIProviderWrapperLayout({
   params,
 }: Readonly<{ children: React.ReactNode, params: {id: string} }>) {
     console.log(`AIProviderWrapperLayout with id=${params.id}`)
-    const conversationId = parseInt(params.id)!;
+    const conversationId = parseInt(params.id);
 
     const AI = createAI<ServerMessage[], ClientMessage[]>({
         actions: {
@@ -22,14 +21,14 @@ export default async function AIProviderWrapperLayout({
             'use server';
         
             if (done) {
-              saveChatToDB(conversationId, state);
+              saveMessagesToDB(conversationId, state);
             }
         },
         onGetUIState: async () => {
             'use server';
         
             console.log("onGetUIState");
-            const historyFromDB: ServerMessage[] = await loadChatFromDB(conversationId);
+            const historyFromDB: ServerMessage[] = await loadMessagesFromDB(conversationId);
             const historyFromApp: ServerMessage[] = getAIState() as ServerMessage[];
         
             // If the history from the database is different from the
@@ -37,8 +36,8 @@ export default async function AIProviderWrapperLayout({
             // based on the history from the database
         
             if (historyFromDB.length !== historyFromApp.length) {
-                return historyFromDB.map(({ role, content }) => ({
-                    id: nanoid(),
+                return historyFromDB.map(({ id, role, content }) => ({
+                    id,
                     role,
                     display: hydrateComponentForContent(content)
                 }));

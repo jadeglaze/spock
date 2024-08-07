@@ -58,7 +58,7 @@ export default function Page({ params }: {params: {id: string}}) {
                 >
                     <div className="relative">
                     <Textarea
-                        placeholder="Message to Jippity..."
+                        placeholder="Message to Kirk..."
                         value={input}
                         name="message"
                         id="message"

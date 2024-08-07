@@ -27,7 +27,7 @@ export const conversations = createTable("conversations",
 
 export const messages = createTable("messages",
   {
-    id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+    id: text("id").primaryKey(),  // will be a nanoid supplied by the app
     
     role: text("role").notNull(),
     content: text("content").notNull(),

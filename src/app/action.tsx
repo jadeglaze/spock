@@ -17,6 +17,7 @@ import { QRComponent } from "~/components/ui/qr-component";
 import { WolframAlphaComponent } from "~/components/ui/wolframalpha-component";
 
 export interface ServerMessage {
+  id: string;
   role: "user" | "assistant";
   content: string;
 }
@@ -33,21 +34,22 @@ export async function continueConversation(
   "use server";
 
   const history = getMutableAIState();
+  const newUserId = nanoid();
+  const newAsstId = nanoid();
 
   history.update((messages: ServerMessage[]) => [
     ...messages,
-    { role: "user", content: JSON.stringify({kind: "text", data: input}) },
+    { id: newUserId, role: "user", content: JSON.stringify({kind: "text", data: input}) },
   ])
 
   const result = await streamUI({
     model: openai("gpt-4o"),
-    // messages: [...history.get(), { role: "user", content: input }],
     messages: history.get(),
     text: ({ content, done }) => {
       if (done) {
         history.done((messages: ServerMessage[]) => [
           ...messages,
-          { role: "assistant", content: JSON.stringify({kind: "text", data: content}) },
+          { id: newAsstId, role: "assistant", content: JSON.stringify({kind: "text", data: content}) },
         ]);
       }
 
@@ -72,7 +74,7 @@ export async function continueConversation(
           const result = await response.text();
           history.done((messages: ServerMessage[]) => [
             ...messages,
-            { role: "assistant", content: JSON.stringify({kind: "wolframAlpha", data: {input: eqn, result: result}}) },
+            { id: newAsstId, role: "assistant", content: JSON.stringify({kind: "wolframAlpha", data: {input: eqn, result: result}}) },
           ])
           return <WolframAlphaComponent input={eqn} result={result} />
         },
@@ -99,7 +101,7 @@ export async function continueConversation(
           const url = buildUrl("https://api.qrserver.com/v1/create-qr-code/", params);
           history.done((messages: ServerMessage[]) => [
             ...messages,
-            { role: "assistant", content: JSON.stringify({kind: "qr", data: url}) },
+            { id: newAsstId, role: "assistant", content: JSON.stringify({kind: "qr", data: url}) },
           ])
           return <QRComponent url={url} />
         },
@@ -119,7 +121,7 @@ export async function continueConversation(
           });
           history.done((messages: ServerMessage[]) => [
             ...messages,
-            { role: "assistant", content: JSON.stringify({kind: "joke", data: joke.object}) },
+            { id: newAsstId, role: "assistant", content: JSON.stringify({kind: "joke", data: joke.object}) },
           ])
           return <JokeComponent joke={joke.object} />;
         },
@@ -128,7 +130,7 @@ export async function continueConversation(
   });
 
   return {
-    id: nanoid(),
+    id: newAsstId,
     role: "assistant",
     display: result.value,
   };
@@ -142,26 +144,26 @@ function buildUrl(baseUrl: string, params: Record<string, string | number | bool
   return url.toString();
 }
 
-export async function saveChatToDB(convoId: number, state: ServerMessage[]) {
+export async function saveMessagesToDB(convoId: number, state: ServerMessage[]) {
   console.log(`saveChatToDB conversationId=${convoId}`);
   console.log(state);
 
-  const messageList = state.map(({role, content}: ServerMessage) => ({
+  const messageList = state.map(({id, role, content}: ServerMessage) => ({
+    id,
     role: role.toString(),
     content,
     conversationId: convoId
   }));
-  await db.insert(messages).values(messageList);
+  messageList.map(async (msg) => 
+    await db.insert(messages).values(msg).onConflictDoNothing({target: messages.id}));
 }
 
-export async function loadChatFromDB(conversationId: number): Promise<ServerMessage[]> {
+export async function loadMessagesFromDB(conversationId: number): Promise<ServerMessage[]> {
   console.log(`loadChatFromDB conversationId=${conversationId}`);
   const results = await db.query.messages.findMany({
     where: eq(messages.conversationId, conversationId)
   });
-  // console.log(results);
   const chat = results as ServerMessage[];
-  // console.log(chat);
   return chat;
 }
 
@@ -170,5 +172,5 @@ export async function newConversation() {
   const { insertedId } = (await db.insert(conversations).values({}).returning({insertedId: conversations.id}))[0]!;
   console.log(`convo=${insertedId}`)
   revalidatePath("/", "layout");
-  redirect(`/convo/${insertedId.toString()}`);
+  redirect(`/convo/${insertedId}`);
 }
