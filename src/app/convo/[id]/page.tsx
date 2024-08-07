@@ -18,7 +18,7 @@ export default function Page({ params }: {params: {id: string}}) {
     
     return (
         <div className="flex flex-col">
-            <div className="sticky top-0 flex items-center justify-between px-4 py-3 border-b bg-background">
+            <div className="sticky top-0 bg-input flex items-center justify-between px-4 py-3 border-b bg-background">
                 <div className="flex items-center gap-3">
                 <Avatar className="w-8 h-8 border">
                     <AvatarImage src="/placeholder-user.jpg" alt="Image" />

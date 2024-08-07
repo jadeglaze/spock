@@ -33,7 +33,7 @@ export default async function RootLayout({
       <body>
         <div className="grid md:grid-cols-[300px_1fr] min-h-screen w-full bg-background">
           <div className="flex flex-col border-r bg-muted/40">
-            <div className="sticky top-0 flex items-center justify-between px-4 py-3 border-b">
+            <div className="sticky top-0 bg-input flex items-center justify-between px-4 py-3 border-b">
               <div className="text-lg font-medium">
                 <Link href="/" prefetch={false}>Conversations</Link>
               </div>

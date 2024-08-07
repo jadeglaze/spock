@@ -5,7 +5,7 @@ import { Button } from "./button"
 
 const NewConvoButton = ({ newConversation }: { newConversation: any }) => {
   return (
-    <Button variant="ghost" size="icon"
+    <Button className="w-8 h-8" variant="ghost" size="icon"
       onClick={async () => {
         newConversation();
       }}
