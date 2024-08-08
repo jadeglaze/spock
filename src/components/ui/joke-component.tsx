@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
-import { Joke } from "../../app/joke";
+import type { Joke } from "../../app/joke";
 
 export const JokeComponent = ({ joke }: { joke?: Joke }) => {
   const [showPunchline, setShowPunchline] = useState(false);

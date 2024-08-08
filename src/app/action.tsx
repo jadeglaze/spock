@@ -2,7 +2,7 @@
 
 import { getMutableAIState, streamUI } from "ai/rsc";
 import { openai } from "@ai-sdk/openai";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { z } from "zod";
 import { nanoid } from "nanoid";
 import { JokeComponent } from "../components/ui/joke-component";
@@ -43,7 +43,7 @@ export async function continueConversation(
 
   const result = await streamUI({
     model: openai("gpt-4o"),
-    messages: history.get(),
+    messages: history.get() as ServerMessage[],
     text: ({ content, done }) => {
       if (done) {
         history.done((messages: ServerMessage[]) => [
@@ -63,7 +63,7 @@ export async function continueConversation(
         generate: async function* ({ eqn }: {eqn: string}) {
           yield <div>Asking WolframAlpha {eqn}...</div>;
           const url = `http://api.wolframalpha.com/v1/result?appid=${process.env.WOLFRAM_ALPHA_APP_ID}&i=${encodeURIComponent(eqn)}`;
-          let response = await fetch(
+          const response = await fetch(
             url,
             {
               method: 'get',
@@ -143,6 +143,14 @@ function buildUrl(baseUrl: string, params: Record<string, string | number | bool
   return url.toString();
 }
 
+async function resolvePromisesSequentially<T>(tasks: Promise<T>[]) {
+  const results = [];
+  for (const task of tasks) {
+    results.push(await task);
+  }
+  return results;
+}
+
 export async function saveMessagesToDB(convoId: number, state: ServerMessage[]) {
   console.log(`saveChatToDB conversationId=${convoId}`);
 
@@ -152,8 +160,9 @@ export async function saveMessagesToDB(convoId: number, state: ServerMessage[]) 
     content,
     conversationId: convoId
   }));
-  messageList.map(async (msg) => 
-    await db.insert(messages).values(msg).onConflictDoNothing({target: messages.id}));
+  const tasks = messageList.map((msg) => 
+    db.insert(messages).values(msg).onConflictDoNothing({target: messages.id}));
+  await resolvePromisesSequentially(tasks);
 }
 
 export async function loadMessagesFromDB(conversationId: number): Promise<ServerMessage[]> {

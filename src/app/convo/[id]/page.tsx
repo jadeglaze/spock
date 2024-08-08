@@ -6,8 +6,8 @@ import { Balloon } from "~/components/ui/balloon"
 import { Textarea } from "~/components/ui/textarea"
 import { Button } from "~/components/ui/button"
 import { useState } from "react"
-import { useActions, useAIState, useUIState } from "ai/rsc"
-import { ClientMessage} from "~/app/action"
+import { useActions, useUIState } from "ai/rsc"
+import type { ClientMessage } from "~/app/action"
 import { nanoid } from "nanoid"
 
 
@@ -49,12 +49,12 @@ export default function Page({ params }: {params: {id: string}}) {
                             { id: newUserId, role: "user", display: input },
                         ]);
             
-                        const message = await continueConversation(newUserId, input);
+                        const message = await continueConversation(newUserId, input) as Promise<ClientMessage[]>;
             
                         setConversation((currentConversation: ClientMessage[]) => [
                             ...currentConversation,
                             message,
-                        ]);
+                        ] as ClientMessage[]);
                     }}
                 >
                     <div className="relative">
@@ -81,7 +81,7 @@ export default function Page({ params }: {params: {id: string}}) {
 }
 
 
-function ArrowUpIcon(props: any) {
+function ArrowUpIcon<T>(props: T) {
   return (
     <svg
     {...props}

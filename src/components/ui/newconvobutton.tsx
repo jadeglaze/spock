@@ -2,12 +2,13 @@
 import * as React from "react"
 import { Button } from "./button"
 
+type NewConversationFn = () => Promise<void>;
 
-const NewConvoButton = ({ newConversation }: { newConversation: any }) => {
+const NewConvoButton = ({ newConversation }: { newConversation: NewConversationFn }) => {
   return (
     <Button className="w-8 h-8" variant="ghost" size="icon"
       onClick={async () => {
-        newConversation();
+        await newConversation();
       }}
     >
       <PlusIcon className="w-5 h-5" />
@@ -17,7 +18,7 @@ const NewConvoButton = ({ newConversation }: { newConversation: any }) => {
 }
 NewConvoButton.displayName = "NewConvoButton"
 
-function PlusIcon(props: any) {
+function PlusIcon<T>(props: T) {
   return (
     <svg
       {...props}
