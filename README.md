@@ -1,8 +1,12 @@
 # Spock 🖖
 
-My first thought was to call this project Spock. Upon further reflection, I think Kirk would be a better name.
-This reflects the reality that we (as much as I don't like speaking for all of civilization) always thought AI, when it came, would solve the logical problems that people were bad at.
-Instead, the emergence of GenAI/LLMs has disrupted mostly creative - emotional - fields where we never thought it would play.
+My first thought was to call this project Spock. Upon further reflection, 
+I think Kirk would be a better name.
+This reflects the reality that we (as much as I don't like speaking for all 
+of civilization) always thought AI, when it came, would solve the logical problems 
+that people were bad at.
+Instead, the emergence of GenAI/LLMs has disrupted mostly creative - emotional - 
+fields where we never thought it would play.
 Kirk.
 Not Spock.
 QED LLAP 🖖
@@ -17,14 +21,73 @@ QED LLAP 🖖
 
 ## OK, WTH is This Thing?
 It's basically ChatGPT with some tools integrated.
-Specifically, it integrates Wolfram Alpha for calculations, a QR Code generator and a silly joke generator.
-In all honesty, I'm not sure if you'd call this full on ReAct reasoning.
-Vercel's AI SDK is clearly letting ChatGPT do some chaining behind the seens, because it can answer prompts
-like "Make me a QR code that encodes the capital of New York." which implies that it first had to figure out
-that the capital of New York is Albany before then using the QR code tool. It can't, however, use more than
-one tool to answer a prompt. i.e.: "Make a QR code with the result of 42*42 as it's message." trips it up
-and it'll just do the calc with Wolfram Alpha and stop there. (Although you can then ask it to 
-"Encode that result in a QR code" and it'll know what result you mean from the conversation history.)
+The "tools" are:
+1. Wolfram Alpha for calculations
+2. a QR Code generator
+3. a silly joke generator
+
+Try out any prompt from simple things like "What's your name?" to 
+prompts using a single tool like "tell me a joke" or "calculate pi^pi" to
+prompts that require more complex reasoning and one or more tools like
+"Make me a QR code that encodes the capital of New York." or
+"Make a QR code with the result of 42*42 as it's message."
+
+Yay science! 🖖
+
+## How Does it Work?
+### The AI/LLM/ReAct Magic
+Vercel's AI SDK seems to implement ReAct prompting at least with it's
+`generateText` call. I say "seems to" because, if it walks like a duck
+and talks like a duck... I haven't seen anywhere in their docs where
+they explicitly call out ReAct prompting, but it's clearly able to
+chain together multiple calls to the underlying LLM, including use of
+tools outside the LLM in order to handle a single prompt.
+
+`generateText` (but not yet their purportedly fancier APIs like `streamUI`)
+accepts a `maxToolRoundtrips` parameter which defaults to 0 but which
+you can use to allow the agent to go back and forth multiple times
+to handle things like "Make a QR code with the result of 42+42 as it's message."
+It returns it's "thought process" as a sequence akin to:
+1. Use the calculator tool to compute "42+42".
+2. Calculator tool returned result 84.
+3. Use the QR code tool to generate a QR code containing data 84.
+4. QR Code tool returned URL blah blah...
+5. "I generated a QR code containing 84."
+
+I then use that sequence of steps in reverse to construct the response
+to show to the human user in the chat.
+Specifically: The last item (ie: 5) is always there and contains the friendly text
+to display. If one or more tools was used then he prior two items in the
+sequence (ie: 3 and 4) contain the final tool result, which tool was used
+and what it's input was. All of which may or may not be used to construct
+a rich (React component) portion of the result to display to the user.
+
+### The DB/data store
+It's not very fancy. While a conversation is ongoing, each convo
+is wrapped with an AIProvider. That provider plus some "oh so clever code"
+manage two parallel arrays, one that's the rich UI version of the convo
+another that's the under-the-hood AI version. As the UI is updated,
+the AI one is too and the AI one (more "machine readable") is persisted
+to the DB.
+
+There's only two tables: the top level `conversations` and the
+detail level `messages` which have a foreign key to their convo.
+
+## Weak Areas
+Let's face it: Software is never done so this has weak areas.
+1. Error handling/logging/monitoring and unit testing. This is for sure the
+weakest area. I'd never ship a real product with unit testing, but in this case
+it was just one too many new things to learn in short order. (I'm new to
+TypeScript, React, Next, Tailwind and the Vercel AI SDK so...) I would lean hard on this
+in a real gig, learning fast on my own but also from lots of questions and
+code reviews.
+2. Just like you mentioned: CSS. Though I'm loving Tailwind, it took me way
+too long to fix a couple silly UI bugs and at least a couple I didn't figure out (yet).
+3. The full-on ReAct prompting was a late-breaking change. I'd implemented everything
+with `streamUI` thinking it was capable of more so the reworked full-ReAct
+`continueConversation` is a bit sloppy. It needs more consistent handling
+of tool results and some robustness around interpreting the `responseMessages`
+from the AI.
 
 ## Tech
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
@@ -35,7 +98,6 @@ It makes use of:
 - [Tailwind CSS](https://tailwindcss.com)
 
 I used [v0](https://v0.dev/) for the initial UI design.
-
 
 ## TODO
 - [x] Make it deploy (vercel)
