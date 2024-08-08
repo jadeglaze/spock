@@ -19,10 +19,10 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
 
   const dateFormat: Intl.DateTimeFormatOptions = {
-    month: 'short', 
-    day: 'numeric', 
-    hour12: true, 
-    hour: 'numeric', 
+    month: 'short',
+    day: 'numeric',
+    hour12: true,
+    hour: 'numeric',
     minute: 'numeric'
   };
 
@@ -37,15 +37,15 @@ export default async function RootLayout({
               <div className="text-lg font-medium">
                 <Link href="/" prefetch={false}>Conversations</Link>
               </div>
-              <NewConvoButton newConversation={newConversation}/>
+              <NewConvoButton newConversation={newConversation} />
             </div>
             <div className="flex-1 overflow-auto">
               <div className="grid gap-2 p-4">
-                {convos.map(({id, createdAt}) => (
-                  <ConvoLink 
-                    key={id.toString()} 
-                    href={`/convo/${id.toString()}`} 
-                    title={`#${id.toString()} from ${createdAt.toLocaleString(undefined, dateFormat)}`} 
+                {convos.map(({ id, createdAt }) => (
+                  <ConvoLink
+                    key={id.toString()}
+                    href={`/convo/${id.toString()}`}
+                    title={`#${id.toString()} from ${createdAt.toLocaleString(undefined, dateFormat)}`}
                   />
                 ))}
               </div>

@@ -30,7 +30,7 @@ const Balloon = ({ children, isUser, who }: BalloonProps) => {
           <AvatarFallback>YO</AvatarFallback>
         </Avatar>
       )}
-    </div>    
+    </div>
   )
 }
 

@@ -38,32 +38,32 @@ const qrToolSchema = z.object({
   size: z.string().regex(new RegExp('[0-9]+x[0-9]+')).optional()
     .describe(
       "Specifies the size of the QR code image you want to generate (in px for raster graphic " +
-      "formats like png, gif or jpeg); as logical unit for vector graphics (svg, eps). " + 
+      "formats like png, gif or jpeg); as logical unit for vector graphics (svg, eps). " +
       "The format should be [integer]x[integer] like 150x150."),
   color: z.string().regex(new RegExp('[0-9a-fA-F]{6}')).optional()
     .describe(
-      "Color of the foreground (data modules) as an RGB value in 6 character " + 
+      "Color of the foreground (data modules) as an RGB value in 6 character " +
       "hex format like ff0000 for red or 556B2F for DarkOliveGreen."),
   bgcolor: z.string().regex(new RegExp('[0-9a-fA-F]{6}')).optional()
     .describe(
-      "Color of the background as an RGB value in 6 character hex format like ff0000 " + 
+      "Color of the background as an RGB value in 6 character hex format like ff0000 " +
       "for red or 556B2F for DarkOliveGreen."),
   margin: z.string().optional()
     .describe(
-      "Thickness of the margin in pixels. The margin parameter will be ignored if svg " + 
+      "Thickness of the margin in pixels. The margin parameter will be ignored if svg " +
       "or eps is used as QR code format."),
   qzone: z.string().optional()
     .describe(
-      "Thickness of the “quiet zone”, an area without disturbing elements to help " + 
+      "Thickness of the “quiet zone”, an area without disturbing elements to help " +
       "readers locating the QR code, in modules as measuring unit. This means a value of 1 leads " +
-      "to a drawn margin around the QR code which is as thick as a data pixel/module of the QR code. " + 
+      "to a drawn margin around the QR code which is as thick as a data pixel/module of the QR code. " +
       "The quiet zone will be drawn in addition to an eventually set margin value."),
   format: z.union(
-      [z.literal("png"), z.literal("gif"), z.literal("jpg"), z.literal("jpeg"), z.literal("svg"), z.literal("eps")]
-    )
+    [z.literal("png"), z.literal("gif"), z.literal("jpg"), z.literal("jpeg"), z.literal("svg"), z.literal("eps")]
+  )
     .optional()
     .describe(
-      "It is possible to create the QR code using different file formats, " + 
+      "It is possible to create the QR code using different file formats, " +
       "available formats are: png, gif, jpg, jpeg, svg, eps"),
 });
 
@@ -82,7 +82,7 @@ export async function continueConversation(
 
   history.update((messages: ServerMessage[]) => [
     ...messages,
-    { id: newUserId, role: "user", content: JSON.stringify({text: input, tool: null}) },
+    { id: newUserId, role: "user", content: JSON.stringify({ text: input, tool: null }) },
   ])
 
   const result = await generateText({
@@ -103,15 +103,15 @@ export async function continueConversation(
       calculator: {
         description: "Do a mathematical calculations.",
         parameters: wolframAlphaToolSchema,
-        execute: async ({ eqn }: {eqn: string}) => {
+        execute: async ({ eqn }: { eqn: string }) => {
           const url = `http://api.wolframalpha.com/v1/result?appid=${process.env.WOLFRAM_ALPHA_APP_ID}&i=${encodeURIComponent(eqn)}`;
-          const response = await fetch(url, {method: 'get'});
+          const response = await fetch(url, { method: 'get' });
           const result = await response.text();
           return result;
         },
       },
       qr: {
-        description: 
+        description:
           "Create a QR code with any data the user wants. This is especially useful for " +
           "transfering data from a computer to a phone or from one phone to another.",
         parameters: qrToolSchema,
@@ -123,13 +123,13 @@ export async function continueConversation(
       joke: {
         description: "Tell a joke.",
         parameters: jokeToolSchema,
-        execute: async ({ subject }: {subject: string}) => {
+        execute: async ({ subject }: { subject: string }) => {
           const joke = await generateObject({
             model: openai("gpt-4o"),
             schema: jokeSchema,
             prompt: "Generate a joke that incorporates the following subject:" + subject,
           });
-          
+
           return JSON.stringify(joke.object);
         },
       },
@@ -154,7 +154,7 @@ export async function continueConversation(
   const finalToolCall = responseMessages.length > 1 ? responseMessages[1] as CoreToolMessage : undefined;
   const finalToolReq = responseMessages.length > 2 ? responseMessages[2] as CoreAssistantMessage : undefined;
 
-  const { text } = JSON.parse((finalAnswer?.content[0] as TextPart)?.text);  
+  const { text } = JSON.parse((finalAnswer?.content[0] as TextPart)?.text);
   console.log("text=" + text)
   const toolName = finalToolCall?.content[0]?.toolName;
   console.log("final tool=" + (toolName ?? "no tool"));
@@ -164,10 +164,10 @@ export async function continueConversation(
   console.log("final tool args=" + (JSON.stringify(toolInput) ?? "no tool"));
 
   const asstContent = {
-    text: text, 
+    text: text,
     tool: (toolName && toolInput && toolResult) ? {
-      name: toolName, 
-      input: toolInput, 
+      name: toolName,
+      input: toolInput,
       result: (toolName === "joke" ? JSON.parse(toolResult as string) : toolResult)
     } : null
   }
@@ -197,16 +197,16 @@ export async function selectComponentForContent({ text, tool }: ServerMessageCon
   if (!tool) {
     return <div>{text}</div>
   }
-  const {name, input, result} = tool;
+  const { name, input, result } = tool;
   switch (name) {
     case "joke":
       return <JokeComponent joke={result as Joke} />
     case "qr":
       return <QRComponent text={text} url={result} />
     case "calculator":
-      return <WolframAlphaComponent text={text} input={(input as {eqn: string}).eqn} result={result} />
+      return <WolframAlphaComponent text={text} input={(input as { eqn: string }).eqn} result={result} />
     default:
-      throw new UnsupportedJSONSchemaError({schema: name, reason: `Because Jade didn't implement tool ${name} yet.`})
+      throw new UnsupportedJSONSchemaError({ schema: name, reason: `Because Jade didn't implement tool ${name} yet.` })
   }
 }
 
@@ -229,14 +229,14 @@ export async function resolvePromisesSequentially<T>(tasks: Promise<T>[]) {
 export async function saveMessagesToDB(convoId: number, state: ServerMessage[]) {
   console.log(`saveChatToDB conversationId=${convoId}`);
 
-  const messageList = state.map(({id, role, content}: ServerMessage) => ({
+  const messageList = state.map(({ id, role, content }: ServerMessage) => ({
     id,
     role: role.toString(),
     content,
     conversationId: convoId
   }));
-  const tasks = messageList.map((msg) => 
-    db.insert(messages).values(msg).onConflictDoNothing({target: messages.id}));
+  const tasks = messageList.map((msg) =>
+    db.insert(messages).values(msg).onConflictDoNothing({ target: messages.id }));
   await resolvePromisesSequentially(tasks);
 }
 
@@ -251,7 +251,7 @@ export async function loadMessagesFromDB(conversationId: number): Promise<Server
 
 export async function newConversation() {
   console.log("newConversation");
-  const { insertedId } = (await db.insert(conversations).values({}).returning({insertedId: conversations.id}))[0]!;
+  const { insertedId } = (await db.insert(conversations).values({}).returning({ insertedId: conversations.id }))[0]!;
   console.log(`convo=${insertedId}`)
   revalidatePath("/", "layout");
   redirect(`/convo/${insertedId}`);

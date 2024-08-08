@@ -17,20 +17,20 @@ const ConvoLink = ({ href, title }: ConvoLinkProps) => {
 
   return (
     <Link
-        href={href}
-        className={"flex items-center gap-3 rounded-md p-2 transition-colors" + (isActive ? " bg-input" : " hover:bg-muted")}
-        prefetch={false}
+      href={href}
+      className={"flex items-center gap-3 rounded-md p-2 transition-colors" + (isActive ? " bg-input" : " hover:bg-muted")}
+      prefetch={false}
     >
-        <Avatar className="w-8 h-8 border">
-            <AvatarImage src="/placeholder-user.jpg" alt="Image" />
-            <AvatarFallback>YO</AvatarFallback>
-        </Avatar>
-        <div className="flex-1 overflow-hidden">
-            <div className="font-medium truncate">{title}</div>
-            <div className="text-sm text-muted-foreground truncate">
-                ...Insert convo summary here...
-            </div>
+      <Avatar className="w-8 h-8 border">
+        <AvatarImage src="/placeholder-user.jpg" alt="Image" />
+        <AvatarFallback>YO</AvatarFallback>
+      </Avatar>
+      <div className="flex-1 overflow-hidden">
+        <div className="font-medium truncate">{title}</div>
+        <div className="text-sm text-muted-foreground truncate">
+          ...Insert convo summary here...
         </div>
+      </div>
     </Link>
   )
 }

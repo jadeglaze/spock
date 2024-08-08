@@ -15,7 +15,7 @@ export const createTable = sqliteTableCreator((name) => `spock_${name}`);
 export const conversations = createTable("conversations",
   {
     id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-    
+
     createdAt: int("created_at", { mode: "timestamp" })
       .default(sql`(unixepoch())`)
       .notNull(),
@@ -28,7 +28,7 @@ export const conversations = createTable("conversations",
 export const messages = createTable("messages",
   {
     id: text("id").primaryKey(),  // will be a nanoid supplied by the app
-    
+
     role: text("role").notNull(),
     content: text("content").notNull(),
     conversationId: integer("conversation_id").references(() => conversations.id),
