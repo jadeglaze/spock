@@ -13,7 +13,10 @@ QED LLAP 🖖
 
 ## Setup
 (Assumes you have pnpm installed. If not: [install pnpm](https://pnpm.io/installation))
-1. `pnpm db:push` to initialize the database.
+1. `cp .env.example .env` and then edit `.env` to fill in the variables
+`OPENAI_API_KEY` and `WOLFRAM_ALPHA_APP_ID` with appropriate values.
+2. `pnpm install` to pull dependencies.
+3. `pnpm db:push` to initialize the database.
 
 ## Running the App
 1. `pnpm dev` to start the dev server.
