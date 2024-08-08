@@ -59,17 +59,15 @@ I used [v0](https://v0.dev/) for the initial UI design.
 - [x] MAJOR BUG: The agent loses the convo history even though it's visible in the UI. InitialAIState?
 - [x] Bug: Sometimes assistant message (plain text) appears as JSON string in UI. (Hilariously this was ChatGPT thinking it was being helpful.)
 - [x] Bug: Contents of left nav and chat window are visible through UI titles when scrolled behind.
+- [x] Reimplement continueConversation to do more full-fledged ReAct prompting.
+- [x] Add instructions to setup and run the app here in README
 - [ ] Bug: Figure out why it doesn't seem to always refresh display of the most recent message when switching convos and switching back.
 - [ ] Bug: UI left nav and chat window scroll together.
 - [ ] add tool 3
 - [ ] Remove joke tool
-- [ ] Implement ReAct reasoning? (It seems to be able to chain ChatGPT to one of the tools, but not one tool to another, which makes sense given the tools return React components (though maybe it still wouldn't do it).)
-- [ ] More ReActive: change Wolfram tool to return simple string answer.
-- [ ] More ReActive: change QR code tool to return... URL? (then consumer would need to know to put it in img tag to use it)
 - [ ] figure out how to add unit tests
-- [ ] handling of errors and edge cases (e.g.: Bug: missing handling of reject from WolframAlpha calls?)
+- [ ] handling of errors and edge cases
 - [ ] error management (w/ Sentry)
-- [ ] Add instructions to setup and run the app here in README
 - [ ] Fix inconsistent tab width in code (ideally autoformat)
 
 ## Captain's Log
