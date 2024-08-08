@@ -49,7 +49,7 @@ export default function Page({ params }: {params: {id: string}}) {
                             { id: newUserId, role: "user", display: input },
                         ]);
             
-                        const message = await continueConversation(newUserId, input) as Promise<ClientMessage[]>;
+                        const message = await continueConversation(newUserId, input) as Promise<ClientMessage>;
             
                         setConversation((currentConversation: ClientMessage[]) => [
                             ...currentConversation,

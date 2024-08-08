@@ -7,11 +7,26 @@ Kirk.
 Not Spock.
 QED LLAP 🖖
 
-## Running the App
+## Setup
+(Assumes you have pnpm installed. If not: [install pnpm](https://pnpm.io/installation))
+1. `pnpm db:push` to initialize the database.
 
+## Running the App
+1. `pnpm dev` to start the dev server.
+2. go to [http://localhost:3000/](http://localhost:3000/)
+
+## OK, WTH is This Thing?
+It's basically ChatGPT with some tools integrated.
+Specifically, it integrates Wolfram Alpha for calculations, a QR Code generator and a silly joke generator.
+In all honesty, I'm not sure if you'd call this full on ReAct reasoning.
+Vercel's AI SDK is clearly letting ChatGPT do some chaining behind the seens, because it can answer prompts
+like "Make me a QR code that encodes the capital of New York." which implies that it first had to figure out
+that the capital of New York is Albany before then using the QR code tool. It can't, however, use more than
+one tool to answer a prompt. i.e.: "Make a QR code with the result of 42*42 as it's message." trips it up
+and it'll just do the calc with Wolfram Alpha and stop there. (Although you can then ask it to 
+"Encode that result in a QR code" and it'll know what result you mean from the conversation history.)
 
 ## Tech
-
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 It makes use of:
 
@@ -19,7 +34,7 @@ It makes use of:
 - [Drizzle](https://orm.drizzle.team)
 - [Tailwind CSS](https://tailwindcss.com)
 
-It's hosted on [Vercel](https://vercel.com/) and I used [v0](https://v0.dev/) for the initial UI design.
+I used [v0](https://v0.dev/) for the initial UI design.
 
 
 ## TODO
@@ -57,12 +72,6 @@ It's hosted on [Vercel](https://vercel.com/) and I used [v0](https://v0.dev/) fo
 - [ ] Add instructions to setup and run the app here in README
 - [ ] Fix inconsistent tab width in code (ideally autoformat)
 
-## Weaknesses
-- Don't really like the auto-increment DB IDs but it's fine for this toy.
-- Can't delete convos.
-- There's no priming the bot with guidelines.
-- Drizzle seems to kinda suck at updating the DB to match the schema.
-
 ## Captain's Log
 - Learn a bunch about v0, Create T3 App (This is my first React app and first TypeScript app.)
 - Learn about ReAct prompting (I basically knew the idea and CoT as well, just didn't know the name "ReAct")
@@ -76,8 +85,6 @@ It's hosted on [Vercel](https://vercel.com/) and I used [v0](https://v0.dev/) fo
 - (brew install gh)
 - (gh auth login)
 - gh repo create
-- Created Vercel project from GitHub repo
-- Added DB environment var to Vercel project to it can deploy to prod (automatically on push to main)
 - Use v0 to kick start a UI
 - pnpm dlx shadcn-ui@latest init
 - npx v0 add TxkI58twHZ9
