@@ -149,39 +149,46 @@ export async function continueConversation(
   // 1) The bot's final answer in the JSON format I specified.
   // 2) The structured response from the final tool used, if any.
   // 3) The bot's request to the final tool.
-  const responseMessages = result.responseMessages.reverse();
-  const finalAnswer = responseMessages[0] as CoreAssistantMessage;
-  const finalToolCall = responseMessages.length > 1 ? responseMessages[1] as CoreToolMessage : undefined;
-  const finalToolReq = responseMessages.length > 2 ? responseMessages[2] as CoreAssistantMessage : undefined;
 
-  const { text } = JSON.parse((finalAnswer?.content[0] as TextPart)?.text);
-  console.log("text=" + text)
-  const toolName = finalToolCall?.content[0]?.toolName;
-  console.log("final tool=" + (toolName ?? "no tool"));
-  const toolResult = finalToolCall?.content[0]?.result;
-  console.log("final tool result=" + (toolResult as string ?? "no tool"));
-  const toolInput = (finalToolReq?.content[1] as ToolCallPart).args;
-  console.log("final tool args=" + (JSON.stringify(toolInput) ?? "no tool"));
+  let asstContent: ServerMessageContent = {text: "Oops. Something went wrong. Please try again.", tool: null}
+  try {
+    const responseMessages = result.responseMessages.reverse();
+    const finalAnswer = responseMessages[0] as CoreAssistantMessage;
+    console.log(finalAnswer);
+    const finalToolCall = responseMessages.length > 1 ? responseMessages[1] as CoreToolMessage : undefined;
+    const finalToolReq = responseMessages.length > 2 ? responseMessages[2] as CoreAssistantMessage : undefined;
 
-  const asstContent = {
-    text: text,
-    tool: (toolName && toolInput && toolResult) ? {
-      name: toolName,
-      input: toolInput,
-      result: (toolName === "joke" ? JSON.parse(toolResult as string) : toolResult)
-    } : null
+    const { text } = JSON.parse((finalAnswer?.content[0] as TextPart)?.text);
+    console.log("text=" + text)
+    const toolName = finalToolCall?.content[0]?.toolName;
+    console.log("final tool=" + (toolName ?? "no tool"));
+    const toolResult = finalToolCall?.content[0]?.result;
+    console.log("final tool result=" + (toolResult as string ?? "no tool"));
+    const toolInput = (finalToolReq?.content[1] as ToolCallPart)?.args;
+    console.log("final tool args=" + (JSON.stringify(toolInput) ?? "no tool"));
+  
+    asstContent = {
+      text: text,
+      tool: (toolName && toolInput && toolResult) ? {
+        name: toolName,
+        input: toolInput,
+        result: (toolName === "joke" ? JSON.parse(toolResult as string) : toolResult)
+      } : null
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    history.done((messages: ServerMessage[]) => [
+      ...messages,
+      { id: newAsstId, role: "assistant", content: JSON.stringify(asstContent) },
+    ])
+
+    return {
+      id: newAsstId,
+      role: "assistant",
+      display: await selectComponentForContent(asstContent),
+    };
   }
-
-  history.done((messages: ServerMessage[]) => [
-    ...messages,
-    { id: newAsstId, role: "assistant", content: JSON.stringify(asstContent) },
-  ])
-
-  return {
-    id: newAsstId,
-    role: "assistant",
-    display: await selectComponentForContent(asstContent),
-  };
 }
 
 export type ServerMessageContent = {

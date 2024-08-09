@@ -92,6 +92,14 @@ with `streamUI` thinking it was capable of more so the reworked full-ReAct
 of tool results and some robustness around interpreting the `responseMessages`
 from the AI.
 
+## Known Issues
+* Sometimes switching from one conversation to another will not refresh the
+conversation. Just hitting the browser refresh should fix it.
+* Sometiems the first message back from the AI will be unparsable so
+it will give an error response in the UI. Just try again. As far as I can tell
+this is the AI trying to be clever and returning something unexpected, but
+it's tough to reproduce.
+
 ## Tech
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 It makes use of:
