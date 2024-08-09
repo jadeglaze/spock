@@ -31,8 +31,8 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
-        <div className="grid md:grid-cols-[300px_1fr] min-h-screen w-full bg-background">
-          <div className="flex flex-col border-r bg-muted/40">
+        <div className="flex flex-row min-h-screen w-full bg-background">
+          <div className="w-1/5 border-r bg-muted/40 max-h-screen overflow-y-auto">
             <div className="sticky top-0 bg-input flex items-center justify-between px-4 py-3 border-b">
               <div className="text-lg font-medium">
                 <Link href="/" prefetch={false}>Conversations</Link>

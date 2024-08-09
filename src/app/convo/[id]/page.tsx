@@ -17,7 +17,7 @@ export default function Page({ params }: { params: { id: string } }) {
     const { continueConversation } = useActions();
 
     return (
-        <div className="flex flex-col">
+        <div className="w-4/5 max-h-screen overflow-y-auto">
             <div className="sticky top-0 bg-input flex items-center justify-between px-4 py-3 border-b bg-background">
                 <div className="flex items-center gap-3">
                     <Avatar className="w-8 h-8 border">
@@ -38,7 +38,7 @@ export default function Page({ params }: { params: { id: string } }) {
                     ))}
                 </div>
             </div>
-            <div className="max-w-[1200px] sticky bottom-0 bg-background py-2 px-4">
+            <div className="max-w-[1200px] w-4/5 fixed bottom-0 bg-background py-2 px-4">
                 <form
                     onSubmit={async (e) => {
                         const newUserId = nanoid();

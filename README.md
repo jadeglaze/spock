@@ -135,8 +135,8 @@ I used [v0](https://v0.dev/) for the initial UI design.
 - [x] Reimplement continueConversation to do more full-fledged ReAct prompting.
 - [x] Add instructions to setup and run the app here in README
 - [x] Autoformatted code for consistency
+- [x] Bug: UI left nav and chat window scroll together.
 - [ ] Bug: Figure out why it doesn't seem to always refresh display of the most recent message when switching convos and switching back.
-- [ ] Bug: UI left nav and chat window scroll together.
 - [ ] figure out how to add unit tests
 - [ ] handling of errors and edge cases
 - [ ] error management (w/ Sentry)
